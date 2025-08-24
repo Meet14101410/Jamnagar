@@ -1,0 +1,48 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use Data::Dumper;
+
+my $data_file = 'jamnagar_data.txt';
+open my $fh, '<', $data_file or die "Cannot open '$data_file': $!";
+
+my %jamnagar_data;
+
+# Read and parse the data file
+while (my $line = <$fh>) {
+    chomp $line;
+    next if $line =~ /^#/;
+    my ($type, $name, $description) = split /\|/, $line;
+    push @{$jamnagar_data{$type}}, {
+        name => $name,
+        description => $description
+    };
+}
+close $fh;
+
+# Generate a report for a specific category
+sub generate_report_by_type {
+    my $type = shift;
+    print "--- Report on $type in Jamnagar ---\n";
+    if (exists $jamnagar_data{$type}) {
+        foreach my $item (@{$jamnagar_data{$type}}) {
+            print "  - Name: $item->{name}\n";
+            print "    Description: $item->{description}\n";
+        }
+    } else {
+        print "No data found for type '$type'.\n";
+    }
+    print "\n";
+}
+
+# Main script logic
+generate_report_by_type("Historical Place");
+generate_report_by_type("Religious Site");
+
+__END__
+# Data for jamnagar_data.txt
+# Type|Name|Description
+Historical Place|Lakhota Lake & Palace|A beautiful lake with a palace in the center, a museum today.
+Religious Site|Dwarkadhish Temple|A major Hindu pilgrimage site and a Char Dham pilgrimage.
+Nature Reserve|Khijadiya Bird Sanctuary|A sanctuary for migratory birds and local avian species.
+Historical Place|Darbarghad Palace|The former royal palace of Jamnagar.
