@@ -1,0 +1,42 @@
+class JamnagarInfoSystem:
+    """A basic information system for Jamnagar city."""
+    
+    def __init__(self):
+        self.city_facts = {
+            "Location": "Gujarat, India",
+            "Population": "Approx. 600,000 (2023)",
+            "Known For": "Brass parts industry, oil refineries, and palaces"
+        }
+        self.points_of_interest = [
+            {"name": "Lakhota Lake & Palace", "type": "Historical Place", "description": "A beautiful lake with a palace in the center, a museum today."},
+            {"name": "Dwarkadhish Temple", "type": "Religious Site", "description": "A major Hindu pilgrimage site and a Char Dham pilgrimage."},
+            {"name": "Khijadiya Bird Sanctuary", "type": "Nature Reserve", "description": "A sanctuary for migratory birds and local avian species."}
+        ]
+
+    def get_city_fact(self, fact_name):
+        """Retrieves and prints a specific city fact."""
+        if fact_name in self.city_facts:
+            print(f"{fact_name}: {self.city_facts[fact_name]}")
+        else:
+            print(f"Fact not found: {fact_name}")
+
+    def search_points_of_interest(self, search_term):
+        """Searches for points of interest by name or type."""
+        print(f"\n--- Search Results for '{search_term}' ---")
+        found = False
+        for poi in self.points_of_interest:
+            if search_term.lower() in poi["name"].lower() or search_term.lower() in poi["type"].lower():
+                print(f"Name: {poi['name']}")
+                print(f"Type: {poi['type']}")
+                print(f"Description: {poi['description']}")
+                print("-" * 40)
+                found = True
+        if not found:
+            print("No matching points of interest found.")
+
+# Main script logic
+info_system = JamnagarInfoSystem()
+info_system.get_city_fact("Population")
+info_system.get_city_fact("Known For")
+info_system.search_points_of_interest("palace")
+info_system.search_points_of_interest("Nature Reserve")
